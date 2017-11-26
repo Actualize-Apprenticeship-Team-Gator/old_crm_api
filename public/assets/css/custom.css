@@ -1,0 +1,11 @@
+/* your styles go here */
+
+.sign-in-form {
+  width: 50%;
+}
+
+.sign-in-form h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #33B35A;
+}

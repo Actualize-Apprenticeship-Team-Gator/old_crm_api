@@ -1,0 +1,29 @@
+<section class="forms">
+  <div class="container-fluid">
+    <header>
+      <h1>Daily Progress Logs</h1>
+    </header>
+
+
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>Date</th>
+          <th>Processed</th>
+          <th>Connects</th>
+          <th>Sets</th>
+        </tr>
+        <% @logs.each do |log| %>
+          <tr>
+            <td><%= log.date %></td>
+            <td><%= log.processed %></td>
+            <td><%= log.connects %></td>
+            <td><%= log.sets %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+
+  </div>
+</section>

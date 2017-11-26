@@ -1,0 +1,48 @@
+<div id="app">
+  <section class="charts">
+    <div class="container-fluid">
+      <header>
+        <h1 class="h3">All Leads</h1>
+      </header>
+      <div class="row">
+        <%= form_tag('/leads', method: :get) do %>
+          <%= text_field_tag :search %>
+          <%= submit_tag "Search" %>
+        <% end %>
+
+      </div>
+
+      <div class="row">
+        <div class="table-responsive leads-table">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Created</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Hot?</th>
+                <th>Appointment Date</th>
+                <th>Processed Within</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="lead in leads">
+                <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                <td>{{ lead.first_name }}</td>
+                <td>{{ lead.last_name }}</td>
+                <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
+                <td>{{ lead.phone }}</td>
+                <td>{{ lead.hot }}</td>
+                <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                <td>{{ lead.processed_within_minutes }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

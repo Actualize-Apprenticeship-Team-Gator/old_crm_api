@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Actualize CRM</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/assets/css/style.default.css" id="theme-stylesheet">
+    <!-- jQuery Circle-->
+    <link rel="stylesheet" href="/assets/css/grasp_mobile_progress_circle-1.0.0.min.css">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="/assets/img/favicon.ico">
+    <!-- Font Awesome CDN-->
+    <!-- you can replace it by local Font Awesome-->
+    <script src="https://use.fontawesome.com/99347ac47f.js"></script>
+    <!-- Font Icons CSS-->
+    <link rel="stylesheet" href="https://file.myfontastic.com/da58YPMQ7U5HY8Rb6UxkNf/icons.css">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <!-- Side Navbar -->
+    <nav class="side-navbar">
+      <div class="side-navbar-wrapper">
+        <div class="sidenav-header d-flex align-items-center justify-content-center">
+          <div class="sidenav-header-inner text-center">
+            <h2 class="h5 text-uppercase">Actualize</h2><span class="text-uppercase">CRM</span>
+          </div>
+          <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>CRM </strong><!-- <strong class="text-primary">D</strong> --></a></div>
+        </div>
+        <div class="main-menu">
+          <ul id="side-main-menu" class="side-menu list-unstyled">
+            <li class="<%= @all_leads_active %>"><a href="/"> <i class="icon-home"></i><span>All Leads</span></a></li>
+            <li class="<%= @outbound_mode_active %>"> <a href="/next" data-turbolinks="false"><i class="icon-form"></i><span>Outbound Mode</span></a></li>
+            <li class="<%= @daily_progress_active %>"> <a href="/daily_logs"><i class="icon-line-chart"></i><span>Daily Progress</span></a></li>
+            <% if admin_signed_in? %>
+              <li><%= link_to(destroy_admin_session_path, :method => :delete) do %>
+                    <i class="icon-user"></i><span>Log Out</span>
+                  <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+    <div class="page home-page">
+      <!-- navbar-->
+      <header class="header">
+        <nav class="navbar">
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="/leads" class="navbar-brand">
+                  <div class="brand-text hidden-sm-down"><span>Actualize </span><strong class="text-primary">CRM</strong></div></a></div>
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                        <div class="notification d-flex justify-content-between">
+                          <div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                        <div class="notification d-flex justify-content-between">
+                          <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                        <div class="notification d-flex justify-content-between">
+                          <div class="notification-content"><i class="fa fa-upload"></i>Server Rebooted</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                        <div class="notification d-flex justify-content-between">
+                          <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>10 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope"></i><span class="badge badge-info">10</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Jason Doe</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Frank Williams</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Ashley Wood</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-envelope"></i>Read all messages    </strong></a></li>
+                  </ul>
+                </li>
+                <li class="nav-item"><a href="login.html" class="nav-link logout">Logout<i class="fa fa-sign-out"></i></a></li> -->
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Main Section -->
+      <div class="container">
+        <% flash.each do |key, value| %>
+          <% if key == 'notice' %>
+            <div class="alert alert-dismissible alert-success">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4><%= value %></h4>
+            </div>
+          <% elsif key == 'alert' %>
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4><%= value %></h4>
+            </div>
+          <% else %>
+            <div class="alert alert-<%= key %> alert-dismissible" >
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4><%= value %></h4>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      
+
+      <%= yield %>
+      <!-- End of Main Section -->
+
+      <footer class="main-footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <p>Actualize CRM &copy; 2016</p>
+            </div>
+            <div class="col-sm-6 text-right">
+              <p>Design by <a href="https://bootstrapious.com" class="external">Bootstrapious</a></p>
+              <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Javascript files-->
+    <script src="/assets/js/tether.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery.cookie.js"> </script>
+    <script src="/assets/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+    <script src="/assets/js/jquery.nicescroll.min.js"></script>
+    <script src="/assets/js/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="/assets/js/charts-home.js"></script>
+    <script src="/assets/js/front.js"></script>
+
+  </body>
+</html>

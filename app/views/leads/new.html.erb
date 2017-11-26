@@ -1,0 +1,42 @@
+<div class="card">
+  <%= form_for @lead do |f| %>
+    <div class="card-header d-flex align-items-center">
+      <h2 class="h5 display">Personal Info</h2>
+    </div>
+    <div class="update-lead-form">
+      <div class="form-group">
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :phone %>
+        <%= f.text_field :phone, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :city %>
+        <%= f.text_field :city, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :state %>
+        <%= f.text_field :state, class: "form-control form-control-warning" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :zip %>
+        <%= f.text_field :zip, class: "form-control form-control-warning" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" id="update-btn-col">
+        <%= f.submit :save %>
+      </div>
+    </div>
+  <% end %>
+</div>

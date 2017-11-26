@@ -1,0 +1,190 @@
+<section class="forms">
+  <div class="container-fluid">
+    <header>
+      <% if @call_mode %>
+        <h1 class="h3 display">Next Lead: <%= @lead.full_name %></h1>
+      <% else %>
+        <h1 class="h3 display">Edit Lead: <%= @lead.full_name %> </h1>
+      <% end %>
+    </header>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <h2 class="h5 display">Dial</h2>
+          </div>
+
+          <div id="controls">
+            <div id="info" style="display:none">
+              <p class="instructions">Twilio Client</p>
+              <div id="client-name"></div>
+            </div>
+            <div id="call-controls">
+              <p>We think this lead is from <%= Geocoder.address(@lead.ip) %></p>
+              <input id="phone-number" type="text" value="<%= @lead.phone %>" class="form-control"/>
+              <select id="from-number" class="form-control">
+                <option value="">Choose where to call from:</option>
+                <option value="7734666919">Chicago</option>
+                <option value="4152125680">San Francisco</option>
+                <option value="9175215891">New York City</option>
+              </select>
+              <button id="button-call" class="btn btn-primary">Call</button>
+              <button id="button-hangup" class="btn btn-danger">Hangup</button>
+            </div>
+            <div id="log"></div>
+            <div class="card-header d-flex align-items-center">
+              <h2 class="h5 display">Send Custom Text Message</h2>
+            </div>
+
+            <%= form_tag "/text", {class: "form-horizontal text-form"} do %>
+            <div class="form-group row">
+              <%= label_tag :phone, "Phone", {class: 'col-sm-2'} %>
+              <div class="col-sm-10">
+                <%= text_field_tag :phone, @lead.phone, {class: "form-control form-control-warning"} %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <%= label_tag :body, "Text Body", {class: 'col-sm-2'} %>
+              <div class="col-sm-10">
+                <%= text_area_tag :body, nil, {class: "form-control form-control-warning"} %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-2">
+                <%= submit_tag "Text", {class: "form-control btn btn-info"} %>
+              </div>
+            </div>
+            <% end %>
+
+          </div>
+          <div class="card-header d-flex align-items-center">
+            <h2 class="h5 display">History</h2>
+          </div>
+          <div class="card-block">
+            <p>First Became A Lead At: <%= @lead.created_at.strftime("%A %b %e, %l:%M %p") %></p>
+            <p>Number Of Times We Called Them: <%= @lead.number_of_dials %></p>
+
+            <div class="row">
+              <table class="table">
+                <% @lead.events.each do |event| %>
+                  <tr><td><%= event.name %></td><td><%= event.created_at.strftime("%A %b %e, %l:%M %p") %></td></tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if @messages %>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header d-flex align-items-center text-history-header">
+              <h2 class="h5 display">Text History</h2>
+            </div>
+            <div class="text-history">
+              <% @messages.each do |message| %>
+                <div class="text-bubble alert <%= message.from == "+17734666919" ? 'alert-info' : 'alert-success' %>" role="alert"><p><%= message.body %></p></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <%= render 'lead_form' %>
+
+  </div>
+</section>
+
+
+<script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+  // log('Requesting Capability Token...');
+  $.getJSON('/token')
+    .done(function (data) {
+      log('Got a token.');
+      console.log('Token: ' + data.token);
+
+      // Setup Twilio.Device
+      Twilio.Device.setup(data.token);
+
+      Twilio.Device.ready(function (device) {
+        log('Twilio.Device Ready!');
+        document.getElementById('call-controls').style.display = 'block';
+      });
+
+      Twilio.Device.error(function (error) {
+        log('Twilio.Device Error: ' + error.message);
+      });
+
+      Twilio.Device.connect(function (conn) {
+        log('Successfully established call!');
+        document.getElementById('button-call').style.display = 'none';
+        document.getElementById('button-hangup').style.display = 'inline';
+      });
+
+      Twilio.Device.disconnect(function (conn) {
+        log('Call ended.');
+        document.getElementById('button-call').style.display = 'inline';
+        document.getElementById('button-hangup').style.display = 'none';
+      });
+
+      Twilio.Device.incoming(function (conn) {
+        log('Incoming connection from ' + conn.parameters.From);
+        var archEnemyPhoneNumber = '+12099517118';
+
+        if (conn.parameters.From === archEnemyPhoneNumber) {
+          conn.reject();
+          log('It\'s your nemesis. Rejected call.');
+        } else {
+          // accept the incoming connection and start two-way audio
+          conn.accept();
+        }
+      });
+
+      setClientNameUI(data.identity);
+    })
+    .fail(function () {
+      log('Could not get a token from server!');
+    });
+
+  // Bind button to make call
+  document.getElementById('button-call').onclick = function () {
+    // get the phone number to connect the call to
+    var params = {
+      To: document.getElementById('phone-number').value,
+      FromNumber: document.getElementById('from-number').value
+    };
+
+    console.log('Calling ' + params.To + '...');
+    Twilio.Device.connect(params);
+  };
+
+  // Bind button to hangup call
+  document.getElementById('button-hangup').onclick = function () {
+    // log('Hanging up...');
+    Twilio.Device.disconnectAll();
+  };
+
+});
+
+// Activity log
+function log(message) {
+  var logDiv = document.getElementById('log');
+  logDiv.innerHTML += '<p>&gt;&nbsp;' + message + '</p>';
+  logDiv.scrollTop = logDiv.scrollHeight;
+}
+
+// Set the client name in the UI
+function setClientNameUI(clientName) {
+  var div = document.getElementById('client-name');
+  div.innerHTML = 'Your client name: <strong>' + clientName +
+    '</strong>';
+}
+
+
+</script>
+
+
+

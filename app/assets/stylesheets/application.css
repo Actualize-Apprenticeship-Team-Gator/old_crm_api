@@ -1,0 +1,92 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.alert.alert-dismissible {
+  margin-top: 20px;
+}
+
+.sign-in-form {
+  margin-top: 40px;
+}
+
+.leads-table {
+  margin-top: 20px;
+}
+
+.leads-table tr {
+  background-color: #fff;
+}
+
+.text-bubble {
+  width: 85%;
+}
+
+/*.alert-info {
+  float: left;
+  margin-left: 10px;
+}
+
+.alert-success {
+  float: right;
+  margin-right: 10px;
+}*/
+
+.text-history-header {
+  margin-bottom: 20px !important;
+}
+
+.text-form, #call-controls, #log {
+  padding: 12px 20px;
+}
+
+#phone-number {
+  border-radius: .25rem !important;
+  margin-bottom: 10px;
+}
+
+#from-number {
+  margin-bottom: 10px;
+}
+
+.btn-primary, .btn-info {
+  font-size: 1rem !important;
+  border-radius: 0.25rem !important;
+}
+
+#phone {
+  border-radius: .25rem !important;
+  margin-bottom: 10px;
+}
+
+.update-lead-form {
+  padding: 12px 20px;
+}
+
+.update-lead-form input {
+  border-radius: .25rem !important;
+}
+
+#lead_notes {
+    height: 200px;
+}
+
+.update-btn {
+  width: 100%;
+}
+
+#update-btn-col {
+  margin: 0 auto;
+}

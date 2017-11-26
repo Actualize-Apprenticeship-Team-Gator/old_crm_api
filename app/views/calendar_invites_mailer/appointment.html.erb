@@ -1,0 +1,15 @@
+<h3>Hello <%= @lead.first_name %>!</h3>
+
+<p>Thank you for your interest in Actualize Coding Bootcamp. Per our conversation, you are scheduled for a <%= @lead.meeting_type %> with our Admissions Advisor, <%= @advisor_info[:full_name] %>. <%= @lead.advisor %> will reach out to you shortly.</p>
+
+<p>To confirm your appointment, please accept your calendar invite.</p>
+
+<p>We look forward to mentoring you on your journey to success!</p>
+
+<p><%= @advisor_info[:full_name] %></p>
+<p><%= @advisor_info[:phone] %></p>
+<p><%= @lead.advisor.downcase %>@actualize.co </p>
+<p>
+<p><%= @lead.full_name %></p>
+<p><%= @lead.email %></p>
+<p><%= @lead.phone %></p>

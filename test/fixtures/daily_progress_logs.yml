@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin_id: 1
+  date: 2017-05-01
+  processed: 1
+  connects: 1
+  sets: 1
+
+two:
+  admin_id: 1
+  date: 2017-05-01
+  processed: 1
+  connects: 1
+  sets: 1

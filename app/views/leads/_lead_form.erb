@@ -1,0 +1,206 @@
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <%= form_for @lead do |f| %>
+        <div class="card-header d-flex align-items-center">
+          <h2 class="h5 display">Personal Info</h2>
+        </div>
+        <div class="update-lead-form">
+          <div class="form-group">
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.text_field :email, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :phone %>
+            <%= f.text_field :phone, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :city %>
+            <%= f.text_field :city, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :state %>
+            <%= f.text_field :state, class: "form-control form-control-warning" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :zip %>
+            <%= f.text_field :zip, class: "form-control form-control-warning" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header d-flex align-items-center">
+          <h2 class="h5 display">Setting Up Their Appointment</h2>
+        </div>
+        <div class="update-lead-form">
+          <div class="form-group">
+            <%= f.label :location, "Which location do they want to join?", {class: "form-control-label" } %>
+            <%= f.select(:location, options_for_select([['Chicago'], ['Online East'], ['Online West']], @lead.location), {:include_blank => 'Select Location'}, {class: 'form-control'}) %>
+          </div>
+          <div class="form-group">
+            <%= f.label :advisor, "Advisor", {class: "form-control-label"} %>
+            <%= f.select(:advisor, options_for_select([['Nick']], @lead.advisor), {:include_blank => 'Select Advisor'}, {class: 'form-control'}) %>
+          </div>
+          <div class="form-group">
+            <%= f.label :meeting_type, "Meeting Type", {class: "form-control-label"} %>
+            <%= f.select(:meeting_type, options_for_select([['Application Interview'], ['Other']], @lead.meeting_type), {:include_blank => 'Select Meeting Type'}, {class: 'form-control'}) %>
+          </div>
+          <div class="form-group">
+            <%= f.label :meeting_format, "Meeting Format", {class: "form-control-label"} %>
+            <%= f.select(:meeting_format, options_for_select([['In-Person'], ['Video Chat'], ['Phone Chat']], @lead.meeting_format), {:include_blank => 'Select Meeting Format'}, {class: 'form-control'}) %>
+          </div>
+          <div class="form-group">
+            <%= f.label :appointment_date, "Appointment Date", {class: "form-control-label"} %>
+            <%= f.datetime_field :appointment_date, {class: 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header d-flex align-items-center">
+          <h2 class="h5 display">Post-Call Records</h2>
+        </div>
+        <div class="update-lead-form">
+          <div class="form-group">
+            <div class="i-checks">
+              <%= f.label :connected, "Connected?" %>
+              <%= f.check_box :connected %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="i-checks">
+              <%= f.label :bad_number, "Bad Number?" %>
+              <%= f.check_box :bad_number %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="i-checks">
+              <%= f.label :exclude_from_calling, "Never call again" %>
+              <%= f.check_box :exclude_from_calling %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :notes, "Call Converter Notes" %>
+            <%= f.text_area :notes, {class: 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <% if @call_mode %>
+          <div>
+            <%= f.hidden_field :call_mode, value: true %>
+          </div>
+        <% else %>
+          <div>
+            <div class="card-header d-flex align-items-center">
+              <h2 class="h5 display">Admissions Advisor Records</h2>
+            </div>
+          </div>
+          <div class="update-lead-form">
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :first_appointment_set, "First Appointment Set" %>
+                <%= f.date_field :first_appointment_set, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :first_appointment_actual, "First Appointment Actually Took Place On" %>
+                <%= f.date_field :first_appointment_actual, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :first_appointment_format, "First Appointment Format" %>
+                <%= f.select(:first_appointment_format, options_for_select([['Face To Face'], ['Video'], ['Phone']], @lead.first_appointment_format), {:include_blank => 'Select Format'}, {class: 'form-control'}) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :second_appointment_set, "Second Appointment Set" %>
+                <%= f.date_field :second_appointment_set, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :second_appointment_actual, "Second Appointment Actually Took Place On" %>
+                <%= f.date_field :second_appointment_actual, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :second_appointment_format, "Second Appointment Format" %>
+                <%= f.select(:second_appointment_format, options_for_select([['Face To Face'], ['Video'], ['Phone']], @lead.first_appointment_format), {:include_blank => 'Select Format'}, {class: 'form-control'}) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :enrolled_date, "Enrolled Date" %>
+                <%= f.date_field :enrolled_date, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :deposit_date, "Deposit Date" %>
+                <%= f.date_field :deposit_date, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :sales, "Sales" %>
+                <%= f.text_field :sales, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :collected, "Collected" %>
+                <%= f.text_field :collected, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :status, "Status" %>
+                <%= f.select(:status, options_for_select([['In Progress'], ['Enrolled'], ['Stalled']], @lead.status), {:include_blank => 'Select Format'}, {class: 'form-control'}) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :next_step, "Next Step" %>
+                <%= f.text_field :next_step, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="i-checks">
+                <%= f.label :rep_notes, "Admission Advisor Notes" %>
+                <%= f.text_area :rep_notes, class: 'form-control' %>
+              </div>
+            </div>
+            <div>
+
+        <% end %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6" id="update-btn-col">
+    <%= f.submit :next, {value: @call_mode ? "Process and Move On to Next Lead" : "Update", class: 'btn btn-primary btn-lg update-btn'} %>
+  </div>
+</div>
+<% end %>
+
