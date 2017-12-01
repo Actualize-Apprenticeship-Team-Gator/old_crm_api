@@ -47,8 +47,7 @@
         <div class="main-menu">
           <ul id="side-main-menu" class="side-menu list-unstyled">
             <li class="<%= @all_leads_active %>"><a href="/"><i class="icon-home"></i><span>All Leads</span></a></li>
-            <li class="<%= @new_leads_active %>"><a href="/leads/new"><i class="icon-flask"></i><span>New Lead</span></a>
-            </li>
+            <li class="<%= @new_leads_active %>"><a href="/leads/new"><i class="icon-flask"></i><span>New Lead</span></a></li>
             <li class="<%= @outbound_mode_active %>"> <a href="/next" data-turbolinks="false"><i class="icon-form"></i><span>Outbound Mode</span></a></li>
             <li class="<%= @daily_progress_active %>"> <a href="/daily_logs"><i class="icon-line-chart"></i><span>Daily Progress</span></a></li>
             <% if admin_signed_in? %>
