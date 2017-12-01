@@ -24,7 +24,6 @@
                 <th>Phone</th>
                 <th>Hot?</th>
                 <th>Appointment Date</th>
-                <th>Processed Within</th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +35,6 @@
                 <td>{{ lead.phone }}</td>
                 <td>{{ lead.hot }}</td>
                 <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.processed_within_minutes }}</td>
               </tr>
             </tbody>
           </table>
@@ -45,4 +43,3 @@
     </div>
   </section>
 </div>
-
