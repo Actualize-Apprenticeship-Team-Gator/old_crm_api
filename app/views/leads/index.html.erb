@@ -22,7 +22,6 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Hot?</th>
                 <th>Appointment Date</th>
               </tr>
             </thead>
@@ -33,7 +32,6 @@
                 <td>{{ lead.last_name }}</td>
                 <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
                 <td>{{ lead.phone }}</td>
-                <td>{{ lead.hot }}</td>
                 <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
               </tr>
             </tbody>
