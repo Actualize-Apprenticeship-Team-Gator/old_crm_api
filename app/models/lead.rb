@@ -4,6 +4,7 @@ class Lead < ApplicationRecord
   before_save :standardize_phone
 
   attr_accessor :call_mode
+  attr_reader :outreach
 
   # The algorithm that decides which lead the call converter should call next
   # based on which lead is most likely to lead to a successful call. This algorithm
@@ -43,7 +44,7 @@ class Lead < ApplicationRecord
     begin
       self.standard_phone = Phoner::Phone.parse(self.phone, country_code: '1').to_s
     rescue
-      # We'll ignore an exception that could happen if the given phone 
+      # We'll ignore an exception that could happen if the given phone
       # number has a very unusual format
     end
   end
