@@ -52,7 +52,9 @@ class LeadsController < ApplicationController
 
   def update
     @lead = Lead.find_by(id: params[:id])
+    outreach_body = params[:lead].delete(:outreach_body)
     if @lead.update(lead_params)
+      create_outreach(@lead.id, outreach_body) if outreach_body.present?
       flash[:success] = "Lead saved!"
       redirect_to '/'
     else
@@ -150,5 +152,12 @@ class LeadsController < ApplicationController
       :meeting_type,
       :meeting_format
     )
+  end
+
+  def create_outreach(lead_id, body)
+    unless Outreach.create(lead_id: lead_id, body: body)
+      flash[:error] = "ERROR: We updated the lead but couldn't create the Latest Outreach."
+      render :edit
+    end
   end
 end
