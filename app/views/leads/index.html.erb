@@ -23,7 +23,6 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Appointment Date</th>
-                <th>Processed Within</th>
                 <th>Call Converter Notes</th>
               </tr>
             </thead>
@@ -35,7 +34,6 @@
                 <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
                 <td>{{ lead.phone }}</td>
                 <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.processed_within_minutes }}</td>
                 <td>{{ lead.notes }}</td>
               </tr>
             </tbody>
