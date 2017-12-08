@@ -101,6 +101,20 @@ class LeadsController < ApplicationController
     render xml: twiml.text
   end
 
+  def auto_text
+    @lead = Lead.find_by(id: params[:id])
+    @client = Twilio::REST::Client.new
+    @client.messages.create(
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to: @lead.phone,
+      body: "Hi, #{@lead.first_name}! This is Rena from the Actualize coding bootcamp. Do you have a minute to talk?"
+    )
+
+    flash[:success] = "Auto text sent!"
+    redirect_back(fallback_location: root_path)
+
+  end
+
   # Text from the browser:
   def text
     @client = Twilio::REST::Client.new
@@ -110,7 +124,7 @@ class LeadsController < ApplicationController
       body: params[:body]
     )
 
-    render nothing: true
+    redirect_back(fallback_location: root_path)
   end
 
   def no_leads
