@@ -1,4 +1,4 @@
 class Setting < ApplicationRecord
-  has_many :admins
+  belongs_to :admin
 
 end
