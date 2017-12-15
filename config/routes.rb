@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post '/incoming_voice' => 'webhooks#incoming_voice'
   post '/incoming_text' => 'webhooks#incoming_text'
 
+  get '/settings/edit' => 'settings#edit'
+  patch '/settings' => 'settings#update'
+
   namespace :api do
     namespace :v1 do
       get '/leads' => 'leads#index'
