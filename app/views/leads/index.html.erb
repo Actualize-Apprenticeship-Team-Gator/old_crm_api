@@ -5,11 +5,15 @@
         <h1 class="h3">All Leads</h1>
       </header>
       <div class="row">
-        <%= form_tag('/leads', method: :get) do %>
+<!--         <%= form_tag('/leads', method: :get) do %>
           <%= text_field_tag :search %>
-          <%= submit_tag "Search" %>
-        <% end %>
-
+        <% end %> -->
+        Search Term: <input v-model="searchTermFilter" list="names">
+            <datalist id="names">
+              <option v-for="lead in leads">{{ lead.first_name }}</option>
+              <option v-for="lead in leads">{{ lead.last_name }}</option>
+              <option v-for="lead in leads">{{ lead.email_name }}</option>
+            </datalist>
       </div>
 
       <div class="row">

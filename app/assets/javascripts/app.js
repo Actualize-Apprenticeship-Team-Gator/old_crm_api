@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       leads: [],
       time_format: "12/25/17",
-      url: "https://www.google.com/"
+      url: "https://www.google.com/",
+      searchTermFilter: "",
+      sortAttribute: "name",
+      sortAscending: true,
+      errors: []
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -16,7 +20,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     methods: {
       moment: function(date) {
         return moment(date);
-      }
+      },
+      isValidPerson: function(inputPerson) {
+        var validFirstName = inputPerson.first_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        var validLastName = inputPerson.last_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        var validEmail = inputPerson.email.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        return validFirstName || validLastName || validEmail;
+      },
     },
     computed: {
 
