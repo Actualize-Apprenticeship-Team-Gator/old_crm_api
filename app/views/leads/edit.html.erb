@@ -32,6 +32,16 @@
               <button id="button-call" class="btn btn-primary">Call</button>
               <button id="button-hangup" class="btn btn-danger">Hangup</button>
             </div>
+
+            <%= form_tag "/auto_text", {class: "form-horizontal text-form"} do %>
+              <input type="hidden" name="id" value="<%= @lead.id %>">
+               <div class="form-group row">
+                <div class="col-sm-4">
+                  <%= submit_tag "Send Auto-Text", {class: "form-control btn btn-info"} %>
+                </div>
+              </div>
+            <% end %>
+
             <div id="log"></div>
             <div class="card-header d-flex align-items-center">
               <h2 class="h5 display">Send Custom Text Message</h2>
