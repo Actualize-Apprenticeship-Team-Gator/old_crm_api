@@ -18,8 +18,8 @@ class Admin < ApplicationRecord
   end
 
   def ensure_setting_exist
-    unless setting.exists?
-      setting.create()
+    unless setting
+      Setting.create(admin_id: id)
     end
   end
 
