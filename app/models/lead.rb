@@ -4,7 +4,7 @@ class Lead < ApplicationRecord
 
   before_save :standardize_phone
 
-  attr_accessor :call_mode, :outreach_body
+  attr_accessor :call_mode, :outreach_body, :show_data
 
   # The algorithm that decides which lead the call converter should call next
   # based on which lead is most likely to lead to a successful call. This algorithm
