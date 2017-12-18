@@ -27,6 +27,7 @@ class LeadsController < ApplicationController
   end
 
   def new
+    @new_leads_active = "active"
     @lead = Lead.new
   end
 
@@ -54,7 +55,9 @@ class LeadsController < ApplicationController
 
   def update
     @lead = Lead.find_by(id: params[:id])
+    outreach_body = params[:lead].delete(:outreach_body)
     if @lead.update(lead_params)
+      create_outreach(@lead.id, outreach_body) if outreach_body.present?
       flash[:success] = "Lead saved!"
       redirect_to '/'
     else
@@ -101,6 +104,20 @@ class LeadsController < ApplicationController
     render xml: twiml.text
   end
 
+  def auto_text
+    @lead = Lead.find_by(id: params[:id])
+    @client = Twilio::REST::Client.new
+    @client.messages.create(
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to: @lead.phone,
+      body: "Hi, #{@lead.first_name}! This is Rena from the Actualize coding bootcamp. Do you have a minute to talk?"
+    )
+
+    flash[:success] = "Auto text sent!"
+    redirect_back(fallback_location: root_path)
+
+  end
+
   # Text from the browser:
   def text
     @client = Twilio::REST::Client.new
@@ -110,15 +127,54 @@ class LeadsController < ApplicationController
       body: params[:body]
     )
 
-    render nothing: true
+    redirect_back(fallback_location: root_path)
   end
 
   def no_leads
+    @outbound_mode_active = "active"
   end
 
   private
 
   def lead_params
-    params.require(:lead).permit(:first_name, :last_name, :email, :phone, :city, :state, :zip, :contacted, :appointment_date, :notes, :connected, :bad_number, :advisor, :location, :first_appointment_set, :first_appointment_actual, :first_appointment_format, :second_appointment_set, :second_appointment_actual, :second_appointment_format, :enrolled_date, :deposit_date, :sales, :collected, :status, :next_step, :rep_notes, :exclude_from_calling, :meeting_type, :meeting_format)
+    params.require(:lead).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :city,
+      :state,
+      :zip,
+      :contacted,
+      :appointment_date,
+      :notes,
+      :connected,
+      :bad_number,
+      :advisor,
+      :location,
+      :first_appointment_set,
+      :first_appointment_actual,
+      :first_appointment_format,
+      :second_appointment_set,
+      :second_appointment_actual,
+      :second_appointment_format,
+      :enrolled_date,
+      :deposit_date,
+      :sales,
+      :collected,
+      :status,
+      :next_step,
+      :rep_notes,
+      :exclude_from_calling,
+      :meeting_type,
+      :meeting_format
+    )
+  end
+
+  def create_outreach(lead_id, body)
+    unless Outreach.create(lead_id: lead_id, body: body)
+      flash[:error] = "ERROR: We updated the lead but couldn't create the Latest Outreach."
+      render :edit
+    end
   end
 end

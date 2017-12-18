@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SettingsControllerTest < ActionDispatch::IntegrationTest
+class OutreachTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
