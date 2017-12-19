@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       leads: [],
       time_format: "12/25/17",
       url: "https://www.google.com/",
+      leadIdToShow: -1
       searchTermFilter: "",
       errors: []
     },
@@ -19,6 +20,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       moment: function(date) {
         return moment(date);
       },
+       toggleLeadData: function(leadInput) {
+-        this.leadIdToShow = leadInput.id;
+-        console.log("this.leadIdToShow", this.leadIdToShow)
+-        // newLead.show_data = !newLead.show_data;
+-      },
       isValidPerson: function(inputPerson) {
         var validFirstName = inputPerson.first_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
         var validLastName = inputPerson.last_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;

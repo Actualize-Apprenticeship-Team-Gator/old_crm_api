@@ -6,7 +6,6 @@
       </header>
       <div class="row">
         Search Term: <input v-model="searchTermFilter" list="names">
-    
       </div>
 
       <div class="row">
@@ -24,15 +23,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="lead in leads" v-if="isValidPerson(lead)">
-                <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.first_name }}</td>
-                <td>{{ lead.last_name }}</td>
-                <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
-                <td>{{ lead.phone }}</td>
-                <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.notes }}</td>
-              </tr>
+              <template v-for="lead in leads" v-if="isValidPerson(lead)">
+-                <tr>
+-                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
+-                  <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ lead.phone }}</td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ lead.hot }}</td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
+-                  <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
+-                </tr>
+-                <template v-if="leadIdToShow == lead.id">
+-                  <template v-for="event in lead.events">
+-                    <div class="event-info">
+-                      <p>{{ event.name }}</p>
+-                      <p>{{ event.created_at }}</p>
+-                    </div>
+-                  </template>
+-                </template>
+-              </template>
             </tbody>
           </table>
         </div>
