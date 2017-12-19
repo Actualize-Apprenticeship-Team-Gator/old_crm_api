@@ -7,6 +7,7 @@ class LeadsController < ApplicationController
     @leads.each do |lead|
       lead.show_data = false
     end
+  end
 
   # This is a special feature for call converters who can just call lead after
   # lead without thinking. That is, an automated algorithm decides who the
