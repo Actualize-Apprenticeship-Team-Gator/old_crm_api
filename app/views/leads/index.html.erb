@@ -5,15 +5,7 @@
         <h1 class="h3">All Leads</h1>
       </header>
       <div class="row">
-<!--         <%= form_tag('/leads', method: :get) do %>
-          <%= text_field_tag :search %>
-        <% end %> -->
         Search Term: <input v-model="searchTermFilter" list="names">
-            <datalist id="names">
-              <option v-for="lead in leads">{{ lead.first_name }}</option>
-              <option v-for="lead in leads">{{ lead.last_name }}</option>
-              <option v-for="lead in leads">{{ lead.email_name }}</option>
-            </datalist>
       </div>
 
       <div class="row">
@@ -31,7 +23,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="lead in leads">
+              <tr v-for="lead in leads" v-if="isValidPerson(lead)">
                 <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                 <td>{{ lead.first_name }}</td>
                 <td>{{ lead.last_name }}</td>
