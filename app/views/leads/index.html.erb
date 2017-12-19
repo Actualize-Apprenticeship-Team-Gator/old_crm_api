@@ -5,11 +5,7 @@
         <h1 class="h3">All Leads</h1>
       </header>
       <div class="row">
-        <%= form_tag('/leads', method: :get) do %>
-          <%= text_field_tag :search %>
-          <%= submit_tag "Search" %>
-        <% end %>
-
+        Search Term: <input v-model="searchTermFilter" list="names">
       </div>
 
       <div class="row">
@@ -27,7 +23,7 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="lead in sortedLeads">
+              <template v-for="lead in sortedLeads" v-if="isValidPerson(lead)">
                 <tr>
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
@@ -37,15 +33,15 @@
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
                 </tr>
-                <template v-if="leadIdToShow == lead.id">
-                  <template v-for="event in lead.events">
-                    <div class="event-info">
-                      <p>{{ event.name }}</p>
-                      <p>{{ event.created_at }}</p>
-                    </div>
-                  </template>
-                </template>
-              </template>
+               <template v-if="leadIdToShow == lead.id">
+                 <template v-for="event in lead.events">
+                   <div class="event-info">
+                     <p>{{ event.name }}</p>
+                     <p>{{ event.created_at }}</p>
+                   </div>
+                 </template>
+               </template>
+             </template>
             </tbody>
           </table>
         </div>

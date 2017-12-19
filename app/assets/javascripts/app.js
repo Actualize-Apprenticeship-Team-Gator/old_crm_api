@@ -8,27 +8,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
       url: "https://www.google.com/",
       leadIdToShow: -1,
       sortAttribute: 'created_at',
-      ascending: true
+      ascending: true,
+      searchTermFilter: ""
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
         this.leads = response;
-        // Currently trying to do this in the controller instead
-        // for(let lead of this.leads) {
-        //   console.log("lead...", lead)
-        //   lead.show_data = false;
-
-        // }
       }.bind(this));
     },
     methods: {
       moment: function(date) {
         return moment(date);
-      },
-      toggleLeadData: function(leadInput) {
-        this.leadIdToShow = leadInput.id;
-        console.log("this.leadIdToShow", this.leadIdToShow)
-        // newLead.show_data = !newLead.show_data;
       },
       updateSortAttribute: function(sortAttribute) {
         if (this.sortAttribute === sortAttribute) {
@@ -37,7 +27,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.ascending = true;
           this.sortAttribute = sortAttribute;
         }
-      }
+      },
+      toggleLeadData: function(leadInput) {
+        this.leadIdToShow = leadInput.id;
+        console.log("this.leadIdToShow", this.leadIdToShow)
+        // newLead.show_data = !newLead.show_data;
+      },
+      isValidPerson: function(inputPerson) {
+        var validFirstName = inputPerson.first_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        var validLastName = inputPerson.last_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        var validEmail = inputPerson.email.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
+        return validFirstName || validLastName || validEmail;
+      },
     },
     computed: {
       sortedLeads: function() {
