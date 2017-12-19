@@ -6,11 +6,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
       leads: [],
       time_format: "12/25/17",
       url: "https://www.google.com/",
-      leadIdToShow: -1
+      leadIdToShow: -1,
+      sortAttribute: 'created_at',
+      ascending: true
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
-        console.log(this);
         this.leads = response;
         // Currently trying to do this in the controller instead
         // for(let lead of this.leads) {
@@ -28,10 +29,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
         this.leadIdToShow = leadInput.id;
         console.log("this.leadIdToShow", this.leadIdToShow)
         // newLead.show_data = !newLead.show_data;
+      },
+      updateSortAttribute: function(sortAttribute) {
+        if (this.sortAttribute === sortAttribute) {
+          this.ascending = !this.ascending;
+        } else {
+          this.ascending = true;
+          this.sortAttribute = sortAttribute;
+        }
       }
     },
     computed: {
-
+      sortedLeads: function() {
+        return this.leads.sort(function(a, b) {
+          if (this.ascending) {
+            return a[this.sortAttribute].localeCompare(b[this.sortAttribute])
+          } else {
+            return b[this.sortAttribute].localeCompare(a[this.sortAttribute])
+          }
+        }.bind(this))
+      }
     },
   });
 });

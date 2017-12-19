@@ -18,23 +18,22 @@
             <thead>
               <tr>
                 <th>Created</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Appointment Date</th>
-                <th>Call Converter Notes</th>
+                <th v-on:click="updateSortAttribute('first_name')">First Name</th>
+                <th v-on:click="updateSortAttribute('last_name')">Last Name</th>
+                <th v-on:click="updateSortAttribute('email')">Email</th>
+                <th v-on:click="updateSortAttribute('phone')">Phone</th>
+                <th v-on:click="updateSortAttribute('appointment_date')">Appointment Date</th>
+                <th v-on:click="updateSortAttribute('notes')">Call Converter Notes</th>
               </tr>
             </thead>
             <tbody>
-              <template v-for="lead in leads">
+              <template v-for="lead in sortedLeads">
                 <tr>
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
                   <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.phone }}</td>
-                  <td v-on:click="toggleLeadData(lead)">{{ lead.hot }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
                 </tr>
