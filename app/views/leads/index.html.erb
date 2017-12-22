@@ -13,7 +13,7 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>Created</th>
+                <th v-on:click="updateSortAttribute('created_at')">Created</th>
                 <th v-on:click="updateSortAttribute('first_name')">First Name</th>
                 <th v-on:click="updateSortAttribute('last_name')">Last Name</th>
                 <th v-on:click="updateSortAttribute('email')">Email</th>
