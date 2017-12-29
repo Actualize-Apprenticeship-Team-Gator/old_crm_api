@@ -9,14 +9,18 @@ table {
 
 
 .event-info {
-  height: 50px;
-  background-color: #fff;
+  background-color: #fff !important;
   border-bottom: 1px solid #eaeaea;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 20px;
-  width: 100%;
+  height: 35px;
+
+  td {
+    height: 35px;
+
+    .event-data-label {
+      font-weight: 900;
+      font-size: 0.9em;
+    }
+  }
 
   p {
     margin-bottom: 0;

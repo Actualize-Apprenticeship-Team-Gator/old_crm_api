@@ -35,11 +35,12 @@
                 </tr>
                <template v-if="leadIdToShow == lead.id">
                  <template v-for="event in lead.events"> 
-
-                   <div class="event-info">
-                     <p>{{ event.name }}</p>
-                     <p>{{ event.created_at }}</p>
-                   </div>
+                  <tr class="event-info">
+                     <td colspan="2"><span class="event-data-label">Event: </span> {{ event.name }}</td>
+                     <td colspan="3"><span class="event-data-label">Event Created On: </span> {{ event.created_at }}</td>
+                     <td></td>
+                     <td></td>
+                  </tr>
                  </template>
                </template>
              </template>
