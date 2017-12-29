@@ -24,7 +24,7 @@
             </thead>
             <tbody>
               <template v-for="lead in sortedLeads" v-if="isValidPerson(lead)">
-                <tr>
+                <tr v-bind:class="{pristine: lead.outreaches.length===0}">
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
@@ -34,7 +34,8 @@
                   <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
                 </tr>
                <template v-if="leadIdToShow == lead.id">
-                 <template v-for="event in lead.events">
+                 <template v-for="event in lead.events"> 
+
                    <div class="event-info">
                      <p>{{ event.name }}</p>
                      <p>{{ event.created_at }}</p>
