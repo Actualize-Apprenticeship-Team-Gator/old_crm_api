@@ -3,7 +3,7 @@ class LeadsController < ApplicationController
 
   def index
     @all_leads_active = "active"
-    @leads = Lead.where("phone <> ''").order(created_at: :desc)
+    @leads = Lead.where("phone <> ''")
     @leads.each do |lead|
       lead.show_data = false
     end
