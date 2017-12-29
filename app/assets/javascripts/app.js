@@ -39,6 +39,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var validEmail = inputPerson.email.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;
         return validFirstName || validLastName || validEmail;
       },
+      isActiveLead: function(events, last_outreach_date) {
+        var bool = false
+        for (var event in events) {
+          if (events[event].updated_at > last_outreach_date) {
+            console.log(events[event].updated_at,last_outreach_date)
+            bool = true;
+          }
+        }
+        console.log('poop')
+        return bool      
+      },
     },
     computed: {
       sortedLeads: function() {

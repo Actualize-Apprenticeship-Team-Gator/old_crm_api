@@ -33,6 +33,10 @@ class Lead < ApplicationRecord
     return "#{(number_of_seconds / 60).to_i} minutes"
   end
 
+  def last_outreach_date
+    outreaches.last.created_at if outreaches.last
+  end
+
   # Reset a lead as if it's brand new. This is useful for manual testing.
   def reset
     self.update(hot: true, contacted: false, connected: false, exclude_from_calling: false, appointment_date: nil, advisor: nil, number_of_dials: 0)

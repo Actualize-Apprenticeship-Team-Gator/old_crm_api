@@ -24,7 +24,7 @@
             </thead>
             <tbody>
               <template v-for="lead in sortedLeads" v-if="isValidPerson(lead)">
-                <tr>
+                <tr v-bind:class="{ 'active-lead': isActiveLead(lead.events, lead.last_outreach_date) }">
                   <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
                   <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
