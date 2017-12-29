@@ -46,7 +46,8 @@
         </div>
         <div class="main-menu">
           <ul id="side-main-menu" class="side-menu list-unstyled">
-            <li class="<%= @all_leads_active %>"><a href="/"> <i class="icon-home"></i><span>All Leads</span></a></li>
+            <li class="<%= @all_leads_active %>"><a href="/"><i class="icon-home"></i><span>All Leads</span></a></li>
+            <li class="<%= @new_leads_active %>"><a href="/leads/new"><i class="icon-flask"></i><span>New Lead</span></a></li>
             <li class="<%= @outbound_mode_active %>"> <a href="/next" data-turbolinks="false"><i class="icon-form"></i><span>Outbound Mode</span></a></li>
             <li class="<%= @daily_progress_active %>"> <a href="/daily_logs"><i class="icon-line-chart"></i><span>Daily Progress</span></a></li>
             <% if admin_signed_in? %>
@@ -152,7 +153,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6">
-              <p>Actualize CRM &copy; 2016</p>
+              <p>Actualize CRM &copy; <%= Date.today.year %></p>
             </div>
             <div class="col-sm-6 text-right">
               <p>Design by <a href="https://bootstrapious.com" class="external">Bootstrapious</a></p>

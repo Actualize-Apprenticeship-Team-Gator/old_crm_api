@@ -5,11 +5,7 @@
         <h1 class="h3">All Leads</h1>
       </header>
       <div class="row">
-        <%= form_tag('/leads', method: :get) do %>
-          <%= text_field_tag :search %>
-          <%= submit_tag "Search" %>
-        <% end %>
-
+        Search Term: <input v-model="searchTermFilter" list="names">
       </div>
 
       <div class="row">
@@ -17,27 +13,35 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>Created</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Hot?</th>
-                <th>Appointment Date</th>
-                <th>Processed Within</th>
+                <th v-on:click="updateSortAttribute('created_at')">Created</th>
+                <th v-on:click="updateSortAttribute('first_name')">First Name</th>
+                <th v-on:click="updateSortAttribute('last_name')">Last Name</th>
+                <th v-on:click="updateSortAttribute('email')">Email</th>
+                <th v-on:click="updateSortAttribute('phone')">Phone</th>
+                <th v-on:click="updateSortAttribute('appointment_date')">Appointment Date</th>
+                <th v-on:click="updateSortAttribute('notes')">Call Converter Notes</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="lead in leads">
-                <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.first_name }}</td>
-                <td>{{ lead.last_name }}</td>
-                <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
-                <td>{{ lead.phone }}</td>
-                <td>{{ lead.hot }}</td>
-                <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                <td>{{ lead.processed_within_minutes }}</td>
-              </tr>
+              <template v-for="lead in sortedLeads" v-if="isValidPerson(lead)">
+                <tr>
+                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                  <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
+                  <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
+                  <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
+                  <td v-on:click="toggleLeadData(lead)">{{ lead.phone }}</td>
+                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                  <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
+                </tr>
+               <template v-if="leadIdToShow == lead.id">
+                 <template v-for="event in lead.events">
+                   <div class="event-info">
+                     <p>{{ event.name }}</p>
+                     <p>{{ event.created_at }}</p>
+                   </div>
+                 </template>
+               </template>
+             </template>
             </tbody>
           </table>
         </div>
@@ -45,4 +49,3 @@
     </div>
   </section>
 </div>
-
