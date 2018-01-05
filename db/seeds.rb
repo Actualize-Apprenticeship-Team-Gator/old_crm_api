@@ -11,7 +11,7 @@ event_name = ['footer_form', 'tutorials', 'started application']
 
 Admin.create(email: "test@test.com", password: "password", password_confirmation: "password")
 
-50.times do
+1000.times do
   Lead.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -26,11 +26,11 @@ Admin.create(email: "test@test.com", password: "password", password_confirmation
   )
 end
 
-100.times do
+2000.times do
   event_creation_datetime = Faker::Time.between(20.days.ago, Date.today, :all)
   Event.create(
     name: event_name.sample,
-    lead_id: rand(1..50),
+    lead_id: rand(1..100 0),
     created_at: event_creation_datetime,
     updated_at: event_creation_datetime
   )

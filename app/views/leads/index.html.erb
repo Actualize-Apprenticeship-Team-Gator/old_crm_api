@@ -24,16 +24,16 @@
             </thead>
             <tbody>
               <template v-for="lead in sortedLeads" v-if="isValidPerson(lead)">
-                <tr>
-                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                  <td v-on:click="toggleLeadData(lead)">{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
-                  <td v-on:click="toggleLeadData(lead)">{{ lead.last_name }}</td>
+                <tr v-on:click="toggleLeadData(lead)">
+                  <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                  <td>{{ lead.first_name }} {{ lead.leadIdToShow }}</td>
+                  <td>{{ lead.last_name }}</td>
                   <td><a v-bind:href="'/leads/' + lead.id + '/edit'">{{ lead.email }}</a></td>
-                  <td v-on:click="toggleLeadData(lead)">{{ lead.phone }}</td>
-                  <td v-on:click="toggleLeadData(lead)">{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
-                  <td v-on:click="toggleLeadData(lead)">{{ lead.processed_within_minutes }}</td>
+                  <td>{{ lead.phone }}</td>
+                  <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
+                  <td>{{ lead.processed_within_minutes }}</td>
                 </tr>
-               <template v-if="leadIdToShow == lead.id">
+               <template>
                  <template v-for="event in lead.events">
                    <div class="event-info">
                      <p>{{ event.name }}</p>
