@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       toggleLeadData: function(lead) {
         this.leadIdToShow = lead.id;
         $.get('/api/v1/leads/' + lead.id + '.json').success(function(response) {
+          app.$set(lead, 'events', [])
           lead['events'] = response.events;
-          app.$set(lead, 'events', response.events)
           console.log(lead.events)
         })
       },
