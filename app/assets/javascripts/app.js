@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       leadIdToShow: -1,
       sortAttribute: 'updated_at',
       ascending: false,
-      searchTermFilter: ""
+      searchTermFilter: "",
+      expandedLead: {}
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -28,10 +29,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.sortAttribute = sortAttribute;
         }
       },
-      toggleLeadData: function(leadInput) {
-        this.leadIdToShow = leadInput.id;
-        console.log("this.leadIdToShow", this.leadIdToShow)
-        // newLead.show_data = !newLead.show_data;
+      toggleLeadData: function(lead) {
+        this.leadIdToShow = lead.id;
+        $.get('/api/v1/leads/' + lead.id + '.json').success(function(response) {
+          app.$set(lead, 'events', [])
+          lead['events'] = response.events;
+          console.log(lead.events)
+        })
       },
       isValidPerson: function(inputPerson) {
         var validFirstName = inputPerson.first_name.toLowerCase().indexOf(this.searchTermFilter.toLowerCase()) !== -1;

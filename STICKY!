@@ -1,0 +1,6 @@
+STICKY!
+6:15CSTpm discovered problem, noticed large response times from index view of leads crm, 4seconds load time per 1000 leads
+6:18pm Nathan and Adam to the rescue? With Jamie's help...
+6:44pm discovered issue in leads.events json
+6:45pm checked DB for index on events, already present
+6:50pm tried eager loading strategy--unsuccessful
