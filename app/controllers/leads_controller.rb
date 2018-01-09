@@ -103,16 +103,19 @@ class LeadsController < ApplicationController
   end
 
   def auto_text
-    @auto_text_body = current_admin.setting.auto_text || "This is Rena from the Actualize coding bootcamp. Do you have a minute to talk?" 
     @lead = Lead.find(params[:id])
     @client = Twilio::REST::Client.new
+    @auto_text_body = current_admin.setting.auto_text 
+    rescue
+      @auto_text_body = "This is Rena from the Actualize coding bootcamp. Do you have a minute to talk?"
+    ensure
+      flash[:success] = "Auto text sent!"
+      redirect_back(fallback_location: "/leads/#{@lead.id}/edit")
     @client.messages.create(
       from: ENV['TWILIO_PHONE_NUMBER'],
       to: @lead.phone,
       body: "Hi, #{@lead.first_name}! #{@auto_text_body}"
     )
-    flash[:success] = "Auto text sent!"
-    redirect_back(fallback_location: "/leads/#{@lead.id}/edit")
   end
 
   # Text from the browser:
