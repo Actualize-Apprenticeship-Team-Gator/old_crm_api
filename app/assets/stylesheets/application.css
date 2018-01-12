@@ -26,9 +26,16 @@
   margin-top: 20px;
 }
 
+.pristine {
+  background-color: orange !important;
+
+}
+
+
 .leads-table tr {
   background-color: #fff;
 }
+
 
 .text-bubble {
   width: 85%;
